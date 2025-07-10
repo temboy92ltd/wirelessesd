@@ -9,7 +9,18 @@ socketio = SocketIO(app)
 ALL_ADDRS = [f'C2-{100 + i}' for i in range(50)]
 led_status = {addr: [] for addr in ALL_ADDRS}
 
-@app.route('/')
+@app.route('/api/data', methods=['POST'])
+def receive_data():
+    json_data = request.get_json()
+    addr = json_data.get('address')
+    data = json_data.get('data')
+
+    if addr and isinstance(data, list):
+        devices[addr] = data
+        missed_counts[addr] = 0
+        return jsonify({"status": "OK"}), 200
+    else:
+        return jsonify({"error": "Invalid data"}), 400
 def index():
     return render_template('index.html', devices=led_status.items())
 
