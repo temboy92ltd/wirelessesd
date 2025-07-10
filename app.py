@@ -38,3 +38,18 @@ def read_serial():
 if __name__ == '__main__':
     threading.Thread(target=read_serial, daemon=True).start()
     app.run(host='0.0.0.0', port=5000, debug=False)
+from flask import request, jsonify
+
+@app.route('/api/data', methods=['POST'])
+def receive_data():
+    json_data = request.get_json()
+    addr = json_data.get('address')
+    data = json_data.get('data')
+
+    if addr and isinstance(data, list):
+        devices[addr] = data
+        missed_counts[addr] = 0  # Reset bộ đếm nếu nhận được dữ liệu
+        print(f"[API] Cập nhật từ {addr}: {data}")
+        return jsonify({"status": "OK"}), 200
+    else:
+        return jsonify({"error": "Invalid data"}), 400
