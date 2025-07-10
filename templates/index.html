@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ESP32 LED Monitor</title>
+  <meta http-equiv="refresh" content="2">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      height: 100%;
+    }
+
+    body {
+      color: #fff;
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('{{ url_for("static", filename="pic/background.jpg") }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      filter: blur(6px) brightness(0.6);
+      z-index: -2;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.1);
+      z-index: -1;
+    }
+
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 240px;
+      height: 100%;
+      background-color: #f9f9fb;
+      border-right: 1px solid #ddd;
+      padding: 20px;
+      z-index: 10;
+    }
+
+    .sidebar h3 {
+      color: #444;
+      margin-bottom: 20px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      padding: 12px 10px;
+      margin-bottom: 8px;
+      background-color: #e8e8f5;
+      color: #333;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .sidebar ul li:hover {
+      background-color: #cfd7ff;
+    }
+
+    .main {
+      margin-left: 260px;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #ffffff;
+      margin: 30px 0;
+    }
+
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: flex-start;
+    }
+
+    .card {
+      background-color: #ffffff;
+      color: #333;
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      transition: background 0.3s, transform 0.2s;
+      cursor: pointer;
+      display: inline-block;
+      position: relative;
+      min-width: 200px;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+    }
+
+    .green-bg { background-color: rgba(0, 255, 0, 0.5); }
+    .red-bg   { background-color: rgba(255, 0, 0, 0.5); }
+
+    .border-yellow { border: 5px solid rgb(127, 255, 0) !important; }
+    .border-orange { border: 5px solid orange !important; }
+    .border-blue   { border: 5px solid deepskyblue !important; }
+
+    @keyframes glow-yellow {
+      0%, 100% { box-shadow: 0 0 10px rgba(127, 255, 0, 0.5); }
+      50%      { box-shadow: 0 0 20px rgb(0, 255, 13); }
+    }
+
+    @keyframes glow-orange {
+      0%, 100% { box-shadow: 0 0 10px rgba(255, 165, 0, 0.5); }
+      50%      { box-shadow: 0 0 20px rgba(255, 165, 0, 1); }
+    }
+
+    @keyframes glow-blue {
+      0%, 100% { box-shadow: 0 0 10px rgba(0, 191, 255, 0.5); }
+      50%      { box-shadow: 0 0 20px rgba(0, 191, 255, 1); }
+    }
+
+    .glow-yellow { animation: glow-yellow 1.5s infinite ease-in-out; }
+    .glow-orange { animation: glow-orange 1.5s infinite ease-in-out; }
+    .glow-blue   { animation: glow-blue 1.5s infinite ease-in-out; }
+
+    .device-label {
+      font-weight: bold;
+      margin-bottom: 12px;
+      font-size: 30px;
+      color: #333;
+    }
+
+    .led-container {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.3s ease-out, padding 0.2s ease-out;
+    }
+
+    .led-container.open {
+      max-height: 200px;
+      padding-top: 12px;
+    }
+
+    .leds {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      justify-content: center;
+      flex-wrap: nowrap;
+    }
+
+    .leds > div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .led {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid #ccc;
+      background-color: lightgray;
+    }
+
+    .led.green { background-color: limegreen; }
+    .led.red   { background-color: red; }
+
+    .led-label {
+      font-size: 15px;
+      margin-top: 10px;
+      color: black;
+    }
+
+    .no-data {
+      font-size: 14px;
+      color: #ccc;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay"></div>
+  <div class="sidebar">
+    <h3>BẢNG ĐIỀU KHIỂN</h3>
+    <ul>
+      <li onclick="window.location.href='/'">📡 ESD Monitor</li>
+      <li onclick="window.location.href='/layout'">🏭 Nhà máy</li>
+    </ul>
+  </div>
+
+  <div class="main">
+    <div class="grid">
+      {% for addr, leds in devices %}
+        {% if leds %}
+          {% set all_green = leds | select('equalto', 0) | list | length == leds | length %}
+          {% set any_red = leds | select('equalto', 1) | list | length > 0 %}
+          {% set card_class = 'card ' + ('green-bg' if all_green else 'red-bg' if any_red else '') %}
+        {% else %}
+          {% set card_class = 'card' %}
+        {% endif %}
+
+        {% set index = loop.index0 %}
+        {% set border_class = 'border-yellow' if index < 30 else 'border-orange' if index < 35 else 'border-blue' %}
+        {% set glow_class =
+          'glow-yellow' if leds and index < 30 else
+          'glow-orange' if leds and index < 35 else
+          'glow-blue' if leds else ''
+        %}
+
+        <div class="{{ card_class }} {{ border_class }} {{ glow_class }}" onclick="toggleDetails(this)">
+          <div class="device-label">{{ addr }}</div>
+          <div class="led-container">
+            {% if leds %}
+              <div class="leds">
+                {% for state in leds %}
+                  <div>
+                    <div class="led {{ 'green' if state == 0 else 'red' }}"></div>
+                    <div class="led-label">Device {{ loop.index }}</div>
+                  </div>
+                {% endfor %}
+              </div>
+            {% else %}
+              <div class="no-data">Chưa có dữ liệu</div>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <script>
+    function toggleDetails(card) {
+      const container = card.querySelector('.led-container');
+      const addr = card.querySelector('.device-label').textContent;
+      const isOpen = container.classList.toggle('open');
+      if (isOpen) {
+        localStorage.setItem('open_addr', addr);
+      } else {
+        localStorage.removeItem('open_addr');
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedAddr = localStorage.getItem('open_addr');
+      if (savedAddr) {
+        document.querySelectorAll('.card').forEach(card => {
+          const addr = card.querySelector('.device-label').textContent;
+          if (addr === savedAddr) {
+            const container = card.querySelector('.led-container');
+            container.classList.add('open');
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>
