@@ -1,3 +1,5 @@
 Flask
 gunicorn
+flask_socketio
+eventlet
 pyserial
