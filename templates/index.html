@@ -8,6 +8,29 @@
     * {
       box-sizing: border-box;
     }
+    .card.expanded {
+      flex: 1 1 100%;
+      width: 100%;
+    }
+
+    .led-container.line-layout-bg {
+      padding: 16px;
+      border-radius: 10px;
+    }
+    .layout-image {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto 12px auto;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.3);
+    }
+    .card.line-layout-bg {
+      background-image: url('/static/pic/line_layout.png') !important;
+      background-size: cover;
+      background-position: center;
+      background-blend-mode: multiply;
+    }
 
     html, body {
       margin: 0;
@@ -154,12 +177,31 @@
     .led-container {
       overflow: hidden;
       max-height: 0;
-      transition: max-height 0.3s ease-out, padding 0.2s ease-out;
+      transition: max-height 0.4s ease-out, padding 0.3s ease-out;
     }
 
     .led-container.open {
-      max-height: 200px;
-      padding-top: 12px;
+      max-height: 600px; /* tăng chiều cao để hiển thị hình */
+      padding: 16px;
+    }
+    .card.expanded {
+      flex: 1 1 100% !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      min-height: 400px;
+    }
+    .card {
+      flex: 0 0 auto;
+      width: auto;
+      min-width: 200px;
+      max-width: 300px;
+      transition: all 0.3s ease;
+    }
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: flex-start;
     }
 
     .leds {
@@ -212,6 +254,7 @@
 
   <div class="main">
     <div class="grid">
+      {% set layout_class = 'line-layout-bg' if addr == 'C2-101' else '' %}
       {% for addr, leds in devices %}
         {% if leds %}
           {% set all_green = leds | select('equalto', 0) | list | length == leds | length %}
@@ -229,9 +272,13 @@
           'glow-blue' if leds else ''
         %}
 
-        <div class="{{ card_class }} {{ border_class }} {{ glow_class }}" onclick="toggleDetails(this)">
+        <div class="{{ card_class }} {{ border_class }} {{ glow_class }} {{ layout_class }}" onclick="toggleDetails(this)">
           <div class="device-label">{{ addr }}</div>
           <div class="led-container">
+            {% if 'C2-' in addr %}
+              <img src="{{ url_for('static', filename='pic/line_layout.png') }}" class="layout-image" alt="Layout">
+            {% endif %}
+
             {% if leds %}
               <div class="leds">
                 {% for state in leds %}
@@ -245,35 +292,50 @@
               <div class="no-data">Chưa có dữ liệu</div>
             {% endif %}
           </div>
+
         </div>
       {% endfor %}
     </div>
   </div>
 
   <script>
-    function toggleDetails(card) {
-      const container = card.querySelector('.led-container');
-      const addr = card.querySelector('.device-label').textContent;
-      const isOpen = container.classList.toggle('open');
-      if (isOpen) {
-        localStorage.setItem('open_addr', addr);
-      } else {
-        localStorage.removeItem('open_addr');
-      }
-    }
+  function toggleDetails(card) {
+    const container = card.querySelector('.led-container');
+    const addr = card.querySelector('.device-label').textContent;
+    const isOpen = container.classList.contains('open');
 
-    window.addEventListener('DOMContentLoaded', () => {
-      const savedAddr = localStorage.getItem('open_addr');
-      if (savedAddr) {
-        document.querySelectorAll('.card').forEach(card => {
-          const addr = card.querySelector('.device-label').textContent;
-          if (addr === savedAddr) {
-            const container = card.querySelector('.led-container');
-            container.classList.add('open');
-          }
-        });
+    // Đóng tất cả card khác trước
+    document.querySelectorAll('.card').forEach(c => {
+      const cAddr = c.querySelector('.device-label').textContent;
+      const cContainer = c.querySelector('.led-container');
+      cContainer.classList.remove('open', 'line-layout-bg');
+      c.classList.remove('expanded');
+    });
+
+    // Nếu card chưa mở, thì mở và set layout
+    if (!isOpen) {
+      container.classList.add('open', 'line-layout-bg');
+      card.classList.add('expanded');
+      localStorage.setItem('opened_cards', JSON.stringify([addr]));
+    } else {
+      // Nếu đang mở và được nhấn lại thì đóng
+      localStorage.removeItem('opened_cards');
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    let openedCards = JSON.parse(localStorage.getItem('opened_cards') || '[]');
+
+    document.querySelectorAll('.card').forEach(card => {
+      const addr = card.querySelector('.device-label').textContent;
+      const container = card.querySelector('.led-container');
+
+      if (openedCards.includes(addr)) {
+        container.classList.add('open', 'line-layout-bg');
+        card.classList.add('expanded');
       }
     });
+  });
   </script>
 </body>
 </html>
