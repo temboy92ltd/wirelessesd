@@ -299,43 +299,43 @@
   </div>
 
   <script>
-  function toggleDetails(card) {
-    const container = card.querySelector('.led-container');
-    const addr = card.querySelector('.device-label').textContent;
-    const isOpen = container.classList.contains('open');
-
-    // Đóng tất cả card khác trước
-    document.querySelectorAll('.card').forEach(c => {
-      const cAddr = c.querySelector('.device-label').textContent;
-      const cContainer = c.querySelector('.led-container');
-      cContainer.classList.remove('open', 'line-layout-bg');
-      c.classList.remove('expanded');
-    });
-
-    // Nếu card chưa mở, thì mở và set layout
-    if (!isOpen) {
-      container.classList.add('open', 'line-layout-bg');
-      card.classList.add('expanded');
-      localStorage.setItem('opened_cards', JSON.stringify([addr]));
-    } else {
-      // Nếu đang mở và được nhấn lại thì đóng
-      localStorage.removeItem('opened_cards');
-    }
-  }
-
-  window.addEventListener('DOMContentLoaded', () => {
-    let openedCards = JSON.parse(localStorage.getItem('opened_cards') || '[]');
-
-    document.querySelectorAll('.card').forEach(card => {
-      const addr = card.querySelector('.device-label').textContent;
+    function toggleDetails(card) {
       const container = card.querySelector('.led-container');
+      const addr = card.querySelector('.device-label').textContent;
+      const isOpen = container.classList.contains('open');
 
-      if (openedCards.includes(addr)) {
+      // Đóng tất cả các card khác
+      document.querySelectorAll('.card').forEach(c => {
+        const cContainer = c.querySelector('.led-container');
+        cContainer.classList.remove('open', 'line-layout-bg');
+        c.classList.remove('expanded');
+      });
+
+      if (!isOpen) {
         container.classList.add('open', 'line-layout-bg');
         card.classList.add('expanded');
+        localStorage.setItem('opened_cards', JSON.stringify([addr]));
+      } else {
+        container.classList.remove('open', 'line-layout-bg');
+        card.classList.remove('expanded');
+        localStorage.removeItem('opened_cards');
       }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const openedCards = JSON.parse(localStorage.getItem('opened_cards') || '[]');
+
+      openedCards.forEach(addr => {
+        const card = Array.from(document.querySelectorAll('.card')).find(c =>
+          c.querySelector('.device-label')?.textContent === addr
+        );
+        if (card) {
+          const container = card.querySelector('.led-container');
+          container.classList.add('open', 'line-layout-bg');
+          card.classList.add('expanded');
+        }
+      });
     });
-  });
   </script>
 </body>
 </html>
