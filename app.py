@@ -1,30 +1,52 @@
-from flask import Flask, request, jsonify, render_template
-from flask_socketio import SocketIO, emit
-import eventlet
-eventlet.monkey_patch()
+from flask import Flask, render_template, request, jsonify
+import threading
+import time
 
 app = Flask(__name__)
-socketio = SocketIO(app, cors_allowed_origins="*")
 
-devices = {}  # Lưu trạng thái ESP32
+# Danh sách thiết bị: C2-101 → C2-150
+addresses = [f'C2-{100+i}' for i in range(1, 51)]
+devices = {addr: [] for addr in addresses}
+missed_counts = {addr: 0 for addr in addresses}
 
-@app.route("/")
+# Số lượt không nhận được → reset về "chưa có dữ liệu"
+MAX_MISSED = 5
+
+@app.route('/')
 def index():
-    return render_template("index.html", devices=devices.items())
+    return render_template('index.html', devices=devices.items())
 
-@app.route("/api/data", methods=["POST"])
+@app.route('/api/data', methods=['POST'])
 def receive_data():
-    data = request.json
-    address = data.get("address")
-    leds = data.get("data")
+    try:
+        json_data = request.get_json()
+        addr = json_data.get('address')
+        data = json_data.get('data')
 
-    if address and leds:
-        devices[address] = leds
-        # Gửi dữ liệu đến tất cả client
-        socketio.emit("update_device", {"address": address, "data": leds})
-        return jsonify({"status": "ok"}), 200
+        if addr and isinstance(data, list):
+            if addr in devices:
+                devices[addr] = data
+                missed_counts[addr] = 0
+                print(f"[RECV API] {addr}: {data}")
+                return jsonify({"status": "OK"}), 200
+            else:
+                return jsonify({"error": "Unknown device"}), 400
+        else:
+            return jsonify({"error": "Invalid JSON"}), 400
 
-    return jsonify({"error": "Invalid data"}), 400
+    except Exception as e:
+        print("[ERROR /api/data]", e)
+        return jsonify({"error": str(e)}), 500
+
+def monitor_devices():
+    while True:
+        time.sleep(2)
+        for addr in addresses:
+            if missed_counts[addr] < MAX_MISSED:
+                missed_counts[addr] += 1
+            if missed_counts[addr] >= MAX_MISSED:
+                devices[addr] = []
 
 if __name__ == '__main__':
-    socketio.run(app, host="0.0.0.0", port=5000)
+    threading.Thread(target=monitor_devices, daemon=True).start()
+    app.run(debug=True, host='0.0.0.0', port=5000)
