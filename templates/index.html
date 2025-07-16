@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
   <meta charset="UTF-8">
   <title>ESP32 LED Monitor</title>
-  <meta http-equiv="refresh" content="2">
   <style>
     * {
       box-sizing: border-box;
@@ -272,7 +272,7 @@
           'glow-blue' if leds else ''
         %}
 
-        <div class="{{ card_class }} {{ border_class }} {{ glow_class }} {{ layout_class }}" onclick="toggleDetails(this)">
+        <div class="{{ card_class }} {{ border_class }} {{ glow_class }}" data-addr="{{ addr }}" onclick="toggleDetails(this)">
           <div class="device-label">{{ addr }}</div>
           <div class="led-container">
             {% if 'C2-' in addr %}
@@ -322,7 +322,6 @@
       localStorage.removeItem('opened_cards');
     }
   }
-
   window.addEventListener('DOMContentLoaded', () => {
     let openedCards = JSON.parse(localStorage.getItem('opened_cards') || '[]');
 
@@ -337,5 +336,29 @@
     });
   });
   </script>
+  <script>
+    const socket = io();
+    socket.on('update_device', function(data) {
+      const { address, data: leds } = data;
+      const card = document.querySelector(`.card[data-addr="${address}"]`);
+      if (!card) return;
+      const container = card.querySelector('.led-container');
+      let html = '<div class="layout-wrapper">';
+      html += `<img src="/static/pic/line_layout.png" class="layout-image">`;
+      leds.forEach((state, i) => {
+        const color = state === 0 ? 'green' : 'red';
+        html += `
+          <div class="led-on-image led-${i+1}">
+            <div class="led ${color}"></div>
+            <div class="led-label">Device ${i+1}</div>
+          </div>`;
+      });
+
+      html += '</div>';
+      container.innerHTML = html;
+    });
+  </script>
+</body>
+</html>
 </body>
 </html>
