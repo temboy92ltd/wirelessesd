@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="preload" href="{{ url_for('static', filename='pic/line_layout.png') }}" as="image">
   <meta charset="UTF-8">
   <title>ESP32 LED Monitor</title>
   <meta http-equiv="refresh" content="2">
@@ -184,6 +185,12 @@
       max-height: 600px; /* tăng chiều cao để hiển thị hình */
       padding: 16px;
     }
+    .card .led-container {
+      visibility: hidden;
+    } 
+    .card.expanded .led-container {
+      visibility: visible;
+    }
     .card.expanded {
       flex: 1 1 100% !important;
       width: 100% !important;
@@ -311,30 +318,37 @@
       });
 
       if (!isOpen) {
-        container.classList.add('open', 'line-layout-bg');
-        card.classList.add('expanded');
+        container.classList.add('open');
+        card.classList.add('line-layout-bg');
         localStorage.setItem('opened_cards', JSON.stringify([addr]));
       } else {
-        container.classList.remove('open', 'line-layout-bg');
-        card.classList.remove('expanded');
+        container.classList.remove('open');
+        card.classList.remove('line-layout-bg');
         localStorage.removeItem('opened_cards');
       }
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
-      const openedCards = JSON.parse(localStorage.getItem('opened_cards') || '[]');
+  window.addEventListener('DOMContentLoaded', () => {
+    const openedCards = JSON.parse(localStorage.getItem('opened_cards') || '[]');
+    openedCards.forEach(addr => {
+      const card = Array.from(document.querySelectorAll('.card')).find(c =>
+        c.querySelector('.device-label')?.textContent === addr
+      );
+      if (card) {
+        const container = card.querySelector('.led-container');
+        container.classList.add('open', 'line-layout-bg');
+        card.classList.add('expanded');
 
-      openedCards.forEach(addr => {
-        const card = Array.from(document.querySelectorAll('.card')).find(c =>
-          c.querySelector('.device-label')?.textContent === addr
-        );
-        if (card) {
-          const container = card.querySelector('.led-container');
-          container.classList.add('open', 'line-layout-bg');
-          card.classList.add('expanded');
-        }
-      });
+        // Force reflow (fix image layout glitch)
+        container.offsetHeight; // This line forces reflow
+
+        // Optional: slight delay for smoother effect
+        setTimeout(() => {
+          container.style.visibility = 'visible';
+        }, 100); // adjust delay as needed
+      }
     });
-  </script>
+  });
+</script>
 </body>
 </html>
