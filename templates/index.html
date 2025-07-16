@@ -198,10 +198,10 @@
       min-height: 400px;
     }
     .card {
-      flex: 0 0 20%;
-      max-width: 20%;
-      min-width: 200px;
-      transition: all 0.3s ease;
+    flex: 0 0 20%;
+    max-width: 20%;
+    min-width: 200px;
+    transition: all 0.3s ease;
     }
     .grid {
       display: flex;
@@ -318,12 +318,12 @@
       });
 
       if (!isOpen) {
-        container.classList.add('open');
-        card.classList.add('line-layout-bg');
+        container.classList.add('open', 'line-layout-bg');
+        card.classList.add('expanded');
         localStorage.setItem('opened_cards', JSON.stringify([addr]));
       } else {
-        container.classList.remove('open');
-        card.classList.remove('line-layout-bg');
+        container.classList.remove('open', 'line-layout-bg');
+        card.classList.remove('expanded');
         localStorage.removeItem('opened_cards');
       }
     }
