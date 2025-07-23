@@ -9,7 +9,7 @@ def index():
     return render_template("Buiding.html")
 
 # ESP32 gửi dữ liệu vào đây
-@app.route("/api/update", methods=["POST"])
+@app.route("/api/data", methods=["POST"])
 def receive_data():
     try:
         json_data = request.get_json()
