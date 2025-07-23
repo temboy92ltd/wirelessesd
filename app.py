@@ -25,7 +25,7 @@ missed_counts = {k: 0 for k in devices}
 def index():
     return render_template("Buiding.html")
 
-@app.route("/api/update", methods=["POST"])
+@app.route("/api/data", methods=["POST"])
 def receive_data():
     try:
         json_data = request.get_json()
@@ -44,7 +44,7 @@ def receive_data():
             return jsonify({"error": "Invalid JSON"}), 400
 
     except Exception as e:
-        print("[ERROR /api/update]", e)
+        print("[ERROR /api/data]", e)
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
