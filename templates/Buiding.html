@@ -828,38 +828,30 @@ function fetchData() {
         .then(response => response.json())
         .then(data => {
             data.forEach(device => {
-                console.log("Device:", device.address, device.data);
-
                 const box = document.getElementById(device.address);
-                if (!box) {
-                    console.warn("Không tìm thấy box với ID:", device.address);
-                    return;
-                }
+                if (box) {
+                    const ledContainer = box.querySelector(".led-container");
+                    ledContainer.innerHTML = "";  // Xoá LED cũ
 
-                const ledContainer = box.querySelector(".led-container");
-                if (ledContainer) {
-                    ledContainer.innerHTML = "";  // clear old
-
+                    // Tạo lại LED
                     device.data.forEach((val, index) => {
                         const led = document.createElement("div");
                         led.classList.add("led");
                         led.innerText = `Device ${index + 1}`;
-                        led.style.backgroundColor = val === 1 ? "green" : "red";
+                        led.style.backgroundColor = val === 1 ? "red" : "green";
                         ledContainer.appendChild(led);
                     });
-                }
 
-                // 💡 Đổi nền box nếu có 0 trong mảng
-                if (device.data.includes(0)) {
-                    box.style.backgroundColor = "#ff9999"; // đỏ nhạt
-                    console.log("🔴 Box", device.address, "=> nền đỏ");
-                } else {
-                    box.style.backgroundColor = "#80ff80"; // xanh nhạt
-                    console.log("🟢 Box", device.address, "=> nền xanh");
+                    // Nếu có ít nhất 1 giá trị là 1 → đỏ
+                    const hasRed = device.data.includes(1);
+                    if (hasRed) {
+                        box.style.backgroundColor = "#ff9999"; // đỏ nhạt
+                    } else {
+                        box.style.backgroundColor = "#ffffff"; // trắng
+                    }
                 }
             });
-        })
-        .catch(err => console.error("Lỗi fetchData:", err));
+        });
 }
 
 setInterval(fetchData, 2000);
