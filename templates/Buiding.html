@@ -822,7 +822,6 @@
 
 <script>
 let currentPopupDeviceId = null; // Thiết bị đang mở popup
-
 function fetchData() {
     fetch("/api/data")
         .then(response => response.json())
@@ -831,29 +830,29 @@ function fetchData() {
                 const box = document.getElementById(device.address);
                 if (box) {
                     const ledContainer = box.querySelector(".led-container");
-                    ledContainer.innerHTML = "";  // clear
+                    ledContainer.innerHTML = "";
 
-                    device.data.forEach((val, index) => {
+                    device.data.forEach((val, i) => {
                         const led = document.createElement("div");
                         led.classList.add("led");
-                        led.innerText = `Device ${index + 1}`;
+                        led.innerText = `Device ${i + 1}`;
                         led.style.backgroundColor = val === 1 ? "green" : "red";
                         ledContainer.appendChild(led);
                     });
 
-                    // Đổi nền box
+                    // Thay đổi màu nền box nếu có LED xanh
                     if (device.data.includes(1)) {
-                        box.style.backgroundColor = "#80ff80"; // xanh nhạt
+                        box.style.backgroundColor = "#d0f5c8"; // xanh nhạt
                     } else {
-                        box.style.backgroundColor = "#ff9999"; // đỏ nhạt
+                        box.style.backgroundColor = "#f5c8c8"; // đỏ nhạt
                     }
                 }
             });
-        });
+        })
+        .catch(err => console.error("Fetch error:", err));
 }
 
-setInterval(fetchData, 2000);
-fetchData();
+setInterval(fetchData, 2000);  // gọi mỗi 2 giây
 </script>
 
 <div id="popup" class="popup" onclick="closePopup()">
