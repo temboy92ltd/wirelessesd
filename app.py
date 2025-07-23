@@ -2,11 +2,13 @@ from flask import Flask, render_template, jsonify, request
 import threading
 
 app = Flask(__name__)
-devices = {}  # Cập nhật từ ESP32
+# Danh sách thiết bị: C2-083 → C2-150
+addresses = [f'C2-{i:03}' for i in range(81, 151)]
+devices = {addr: [] for addr in addresses}
 
 @app.route("/")
 def index():
-    return render_template("Buiding.html")
+    return render_template("Buiding.html", devices=devices.items())
 
 # ESP32 gửi dữ liệu vào đây
 @app.route("/api/data", methods=["POST"])
