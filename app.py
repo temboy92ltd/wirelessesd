@@ -12,28 +12,27 @@ def index():
 
 # 🟢 API ESP32 gửi dữ liệu vào
 @app.route("/api/update", methods=["POST"])
-def update_data():
-    content = request.json
-    address = content.get("address")
-    data = content.get("data")
-    if address and data:
-        device_states[address] = {
-            "data": data,
-            "timestamp": time.time()
-        }
-        return jsonify({"status": "ok"}), 200
-    return jsonify({"error": "invalid data"}), 400
+def receive_data():
+    try:
+        json_data = request.get_json()
+        addr = json_data.get('address')
+        data = json_data.get('data')
 
-# 🟢 Frontend lấy dữ liệu về
-@app.route("/api/data")
-def get_data():
-    result = []
-    for address, info in device_states.items():
-        result.append({
-            "address": address,
-            "data": info["data"]
-        })
-    return jsonify(result)
+        if addr and isinstance(data, list):
+            if addr in devices:
+                devices[addr] = data
+                missed_counts[addr] = 0
+                print(f"[RECV API] {addr}: {data}")
+                return jsonify({"status": "OK"}), 200
+            else:
+                return jsonify({"error": "Unknown device"}), 400
+        else:
+            return jsonify({"error": "Invalid JSON"}), 400
 
-if __name__ == "__main__":
-    app.run(debug=True)
+    except Exception as e:
+        print("[ERROR /api/data]", e)
+        return jsonify({"error": str(e)}), 500
+
+if __name__ == '__main__':
+    threading.Thread(target=monitor_devices, daemon=True).start()
+    app.run(debug=True, host='0.0.0.0', port=5000)
