@@ -824,33 +824,42 @@
 let currentPopupDeviceId = null; // Thiết bị đang mở popup
 
 function fetchData() {
-  fetch("/api/data")
-    .then(response => response.json())
-    .then(data => {
-      data.forEach(device => {
-        const box = document.getElementById(device.address);
-        if (!box) return;
+    fetch("/api/data")
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(device => {
+                console.log("Device:", device.address, device.data);
 
-        // Ép kiểu và kiểm tra nếu có LED đỏ (1)
-        const ledData = device.data.map(Number);
-        const hasRed = ledData.includes(1);
+                const box = document.getElementById(device.address);
+                if (!box) {
+                    console.warn("Không tìm thấy box với ID:", device.address);
+                    return;
+                }
 
-        // ✅ Chỉ đổi màu nền box nếu có LED đỏ
-        box.style.backgroundColor = hasRed ? "#ffcccc" : "#ffffff"; // đỏ nhạt / trắng
+                const ledContainer = box.querySelector(".led-container");
+                if (ledContainer) {
+                    ledContainer.innerHTML = "";  // clear old
 
-        // ❌ Không render LED trong box ở đây
-        // ✅ Lưu dữ liệu để dùng khi mở popup
-        box.dataset.ledData = JSON.stringify(ledData);
+                    device.data.forEach((val, index) => {
+                        const led = document.createElement("div");
+                        led.classList.add("led");
+                        led.innerText = `Device ${index + 1}`;
+                        led.style.backgroundColor = val === 1 ? "green" : "red";
+                        ledContainer.appendChild(led);
+                    });
+                }
 
-        // ✅ Nếu popup đang mở đúng thiết bị, thì cập nhật lại LED trong popup
-        if (currentPopupDeviceId === device.address) {
-          showPopup(device.address, ledData);
-        }
-      });
-    })
-    .catch(error => {
-      console.error("Lỗi khi fetch /api/data:", error);
-    });
+                // 💡 Đổi nền box nếu có 0 trong mảng
+                if (device.data.includes(0)) {
+                    box.style.backgroundColor = "#ff9999"; // đỏ nhạt
+                    console.log("🔴 Box", device.address, "=> nền đỏ");
+                } else {
+                    box.style.backgroundColor = "#80ff80"; // xanh nhạt
+                    console.log("🟢 Box", device.address, "=> nền xanh");
+                }
+            });
+        })
+        .catch(err => console.error("Lỗi fetchData:", err));
 }
 
 setInterval(fetchData, 2000);
