@@ -3,14 +3,28 @@ import time
 
 app = Flask(__name__)
 
-# Bộ nhớ tạm lưu trạng thái các thiết bị
-device_states = {}
+# Danh sách thiết bị
+devices = {
+    "C2-081": [],
+    "C2-082": [],
+    "C2-083": [],
+    "C2-084": [],
+    "C2-085": [],
+    "C2-086": [],
+    "C2-087": [],
+    "C2-088": [],
+    "C2-089": [],
+    "C2-140": [],
+    "C2-141": [],
+    "C2-142": [],
+    "C2-121": [],
+}
+missed_counts = {k: 0 for k in devices}
 
 @app.route("/")
 def index():
     return render_template("Buiding.html")
 
-# 🟢 API ESP32 gửi dữ liệu vào
 @app.route("/api/update", methods=["POST"])
 def receive_data():
     try:
@@ -30,9 +44,9 @@ def receive_data():
             return jsonify({"error": "Invalid JSON"}), 400
 
     except Exception as e:
-        print("[ERROR /api/data]", e)
+        print("[ERROR /api/update]", e)
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    threading.Thread(target=monitor_devices, daemon=True).start()
+    # threading.Thread(target=monitor_devices, daemon=True).start()
     app.run(debug=True, host='0.0.0.0', port=5000)
