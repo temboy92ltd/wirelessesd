@@ -823,34 +823,33 @@
 <script>
 let currentPopupDeviceId = null; // Thiết bị đang mở popup
 
-async function fetchData() {
-  try {
-    const res = await fetch('/api/data');
-    const jsonData = await res.json();
+function fetchData() {
+    fetch("/api/data")
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(device => {
+                const box = document.getElementById(device.address);
+                if (box) {
+                    const ledContainer = box.querySelector(".led-container");
+                    ledContainer.innerHTML = "";  // clear
 
-    jsonData.forEach(device => {
-      const id = device.address;
-      const data = device.data;
+                    device.data.forEach((val, index) => {
+                        const led = document.createElement("div");
+                        led.classList.add("led");
+                        led.innerText = `Device ${index + 1}`;
+                        led.style.backgroundColor = val === 1 ? "green" : "red";
+                        ledContainer.appendChild(led);
+                    });
 
-      const box = document.getElementById(id);
-      if (!box) return;
-
-      // Đổi màu background nếu có 1 LED đỏ
-      const hasRed = data.includes(0);
-      box.style.background = hasRed
-        ? "linear-gradient(to bottom, #ff4c4c, #e60000)"
-        : "linear-gradient(to bottom, #8fd349, #7ac83c)";
-
-      // Nếu popup đang mở đúng ID, cập nhật LED bên trong popup
-      const popup = document.getElementById('popup');
-      if (popup.style.display === 'flex' && document.getElementById('popup-title').textContent === id) {
-        renderPopupLeds(data);
-      }
-    });
-
-  } catch (err) {
-    console.error("Lỗi lấy dữ liệu:", err);
-  }
+                    // Đổi nền box
+                    if (device.data.includes(1)) {
+                        box.style.backgroundColor = "#80ff80"; // xanh nhạt
+                    } else {
+                        box.style.backgroundColor = "#ff9999"; // đỏ nhạt
+                    }
+                }
+            });
+        });
 }
 
 setInterval(fetchData, 2000);
