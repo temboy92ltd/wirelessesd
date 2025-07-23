@@ -836,7 +836,7 @@ function fetchData() {
                     device.data.forEach((val, index) => {
                         const led = document.createElement("div");
                         led.classList.add("led");
-                        led.innerText = `Device ${index + 1}`;
+                        led.innerText = ${index + 1}`;
                         led.style.backgroundColor = val === 1 ? "green" : "red";
                         ledContainer.appendChild(led);
                     });
