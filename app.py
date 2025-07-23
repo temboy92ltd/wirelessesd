@@ -24,7 +24,12 @@ missed_counts = {k: 0 for k in devices}
 @app.route("/")
 def index():
     return render_template("Buiding.html")
-
+@app.route("/api/data")
+def get_data():
+    data = []
+    for addr, leds in devices.items():
+        data.append({"address": addr, "data": leds})
+    return jsonify(data)
 @app.route("/api/data", methods=["POST"])
 def receive_data():
     try:
