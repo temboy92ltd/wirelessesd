@@ -913,11 +913,13 @@ popup.addEventListener('click', function (event) {
 </script>
 <script>
 function openPopup(id) {
-  const box = document.getElementById(id);
-  const data = getBoxData(id); // Giả sử đã có trong biến `devices`
-  document.getElementById('popup-title').textContent = id;
-  renderPopupLeds(data);
-  document.getElementById('popup').style.display = 'flex';
+    currentPopupDeviceId = id;
+
+    // Hiển thị popup
+    document.getElementById("popup").style.display = "block";
+
+    // Đặt tiêu đề hoặc ID thiết bị nếu muốn
+    document.getElementById("popup-title").innerText = "Line: " + id;
 }
 function closePopup() {
     currentPopupDeviceId = null;
