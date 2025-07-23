@@ -824,29 +824,33 @@
 let currentPopupDeviceId = null; // Thiết bị đang mở popup
 
 function fetchData() {
- fetch('/api/data')
-        .then(response => response.json())
-        .then(data => {
-            data.forEach(device => {
-                const box = document.getElementById(device.address);
-                if (!box) return;
+  fetch("/api/data")
+    .then(response => response.json())
+    .then(data => {
+      data.forEach(device => {
+        const box = document.getElementById(device.address);
+        if (!box) return;
 
-                // ✅ Đổi màu nền box nếu có LED đỏ
-                if (device.data.includes(1)) {
-                    box.style.backgroundColor = '#ffe5e5'; // ví dụ: hồng nhạt
-                } else {
-                    box.style.backgroundColor = '#ffffff'; // nền trắng
-                }
+        // Ép kiểu và kiểm tra nếu có LED đỏ (1)
+        const ledData = device.data.map(Number);
+        const hasRed = ledData.includes(1);
 
-                // ❌ Không hiển thị LED ở đây nữa
-                // ✅ Khi popup mở thì mới hiển thị LED
-                // Ta lưu data để dùng lại khi popup được mở
-                box.dataset.ledData = JSON.stringify(device.data);
-            });
-        })
-        .catch(error => {
-            console.error('Fetch error:', error);
-        });
+        // ✅ Chỉ đổi màu nền box nếu có LED đỏ
+        box.style.backgroundColor = hasRed ? "#ffcccc" : "#ffffff"; // đỏ nhạt / trắng
+
+        // ❌ Không render LED trong box ở đây
+        // ✅ Lưu dữ liệu để dùng khi mở popup
+        box.dataset.ledData = JSON.stringify(ledData);
+
+        // ✅ Nếu popup đang mở đúng thiết bị, thì cập nhật lại LED trong popup
+        if (currentPopupDeviceId === device.address) {
+          showPopup(device.address, ledData);
+        }
+      });
+    })
+    .catch(error => {
+      console.error("Lỗi khi fetch /api/data:", error);
+    });
 }
 
 setInterval(fetchData, 2000);
