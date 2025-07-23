@@ -1,36 +1,15 @@
 from flask import Flask, render_template, jsonify, request
-import time
+import threading
 
 app = Flask(__name__)
-
-# Danh sách thiết bị
-devices = {
-    "C2-081": [],
-    "C2-082": [],
-    "C2-083": [],
-    "C2-084": [],
-    "C2-085": [],
-    "C2-086": [],
-    "C2-087": [],
-    "C2-088": [],
-    "C2-089": [],
-    "C2-140": [],
-    "C2-141": [],
-    "C2-142": [],
-    "C2-112": [],
-}
-missed_counts = {k: 0 for k in devices}
+devices = {}  # Cập nhật từ ESP32
 
 @app.route("/")
 def index():
     return render_template("Buiding.html")
-@app.route("/api/data")
-def get_data():
-    data = []
-    for addr, leds in devices.items():
-        data.append({"address": addr, "data": leds})
-    return jsonify(data)
-@app.route("/api/data", methods=["POST"])
+
+# ESP32 gửi dữ liệu vào đây
+@app.route("/api/update", methods=["POST"])
 def receive_data():
     try:
         json_data = request.get_json()
@@ -38,20 +17,20 @@ def receive_data():
         data = json_data.get('data')
 
         if addr and isinstance(data, list):
-            if addr in devices:
-                devices[addr] = data
-                missed_counts[addr] = 0
-                print(f"[RECV API] {addr}: {data}")
-                return jsonify({"status": "OK"}), 200
-            else:
-                return jsonify({"error": "Unknown device"}), 400
+            devices[addr] = data
+            print(f"[RECV API] {addr}: {data}")
+            return jsonify({"status": "OK"}), 200
         else:
             return jsonify({"error": "Invalid JSON"}), 400
-
     except Exception as e:
-        print("[ERROR /api/data]", e)
         return jsonify({"error": str(e)}), 500
 
-if __name__ == '__main__':
-    # threading.Thread(target=monitor_devices, daemon=True).start()
+# Web frontend gọi để lấy dữ liệu mới
+@app.route("/api/data")
+def get_data():
+    return jsonify([
+        {"address": addr, "data": data} for addr, data in devices.items()
+    ])
+
+if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=5000)
