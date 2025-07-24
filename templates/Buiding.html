@@ -869,6 +869,8 @@
 
 <script>
 let currentPopupDeviceId = null; // Thiết bị đang mở popup
+const lastUpdate = {};  // khai báo ngoài fetchData (global biến)
+
 async function fetchData() {
     try {
         const res = await fetch('/api/devices');  // ✅ Đúng: gọi GET lấy trạng thái LED
@@ -877,14 +879,11 @@ async function fetchData() {
         jsonData.forEach(device => {
             const id = device.address;
             const data = device.data;
+            
             if (!Array.isArray(data) || data.length === 0) return;
+            
             const box = document.getElementById(id);
-
             if (!box) return;
-
-            // ✅ Chỉ đổi màu nền box nếu có LED đỏ
-            box.style.animation = 'none'; 
-            void box.offsetWidth;
             const hasRed = data.includes(0);
             if (prevData !== newData) {
                 lastDataMap[id] = data;  // Cập nhật lại
@@ -898,7 +897,6 @@ async function fetchData() {
                 box.style.animation = 'none';
                 void box.offsetWidth;  // Bắt buộc: trigger reflow
                 box.style.animation = 'glow-yellow 1.5s ease-out';
-            }
         });
 
         // ✅ Nếu popup đang mở, cập nhật LED bên trong popup
