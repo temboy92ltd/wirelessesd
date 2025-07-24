@@ -130,6 +130,9 @@
             inset 0 -2px 4px rgba(255, 255, 255, 0.1);
 
         transition: all 0.3s ease-in-out;
+        
+        animation: glow-yellow 1.5s infinite ease-in-out;
+        transition: all 0.3s ease;
         }
     .box_18v {
         position: relative;
@@ -330,6 +333,9 @@
             inset 0 -2px 4px rgba(255, 255, 255, 0.15);
 
         transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+        animation: glow-yellow 1.5s infinite ease-in-out;
+        transition: all 0.3s ease;
         }
     .box_restroom {
         background: linear-gradient(to bottom right, #000000, #1a1a1a);
@@ -628,7 +634,28 @@
 .hidden {
   display: none;
 }
+  .border-yellow { border: 5px solid rgb(127, 255, 0) !important; }
+  .border-orange { border: 5px solid orange !important; }
+  .border-blue   { border: 5px solid deepskyblue !important; }
 
+  @keyframes glow-yellow {
+    0%, 100% { box-shadow: 0 0 10px rgba(127, 255, 0, 0.5); }
+    50%      { box-shadow: 0 0 20px rgb(0, 255, 13); }
+  }
+
+  @keyframes glow-orange {
+    0%, 100% { box-shadow: 0 0 10px rgba(255, 165, 0, 0.5); }
+    50%      { box-shadow: 0 0 20px rgba(255, 165, 0, 1); }
+  }
+
+  @keyframes glow-blue {
+    0%, 100% { box-shadow: 0 0 10px rgba(0, 191, 255, 0.5); }
+    50%      { box-shadow: 0 0 20px rgba(0, 191, 255, 1); }
+  }
+
+  .glow-yellow { animation: glow-yellow 1.5s infinite ease-in-out; }
+  .glow-orange { animation: glow-orange 1.5s infinite ease-in-out; }
+  .glow-blue   { animation: glow-blue 1.5s infinite ease-in-out; }
 </style>
 </head>
 <body>
