@@ -879,6 +879,7 @@ async function fetchData() {
             const id = device.address;
             const data = device.data;
 
+            if (!Array.isArray(data) || data.length === 0) return;
             const box = document.getElementById(id);
             if (!box) return;
 
