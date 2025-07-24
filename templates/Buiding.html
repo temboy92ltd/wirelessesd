@@ -869,7 +869,7 @@
 
 <script>
 let currentPopupDeviceId = null; // Thiết bị đang mở popup
-const lastDataMap = {}; // Lưu lại dữ liệu lần trước để so sánh
+const lastUpdate = {};  // khai báo ngoài fetchData (global biến)
 
 async function fetchData() {
     try {
@@ -879,16 +879,13 @@ async function fetchData() {
         jsonData.forEach(device => {
             const id = device.address;
             const data = device.data;
-            
+            // Nếu không có data hoặc data rỗng thì bỏ qua (→ không animation)
             if (!Array.isArray(data) || data.length === 0) return;
             
             const box = document.getElementById(id);
             if (!box) return;
             
             const hasRed = data.includes(0);
-            if (prevData !== newData) {
-                lastDataMap[id] = data;  // Cập nhật lại
-                
             if (hasRed) {
                 box.style.background = 'linear-gradient(to bottom, #ff4d4d, #e60000)';
             } else {
@@ -898,7 +895,6 @@ async function fetchData() {
             box.style.animation = 'none';
             void box.offsetWidth;  // Bắt buộc: trigger reflow
             box.style.animation = 'glow-yellow 1.5s ease-out';
-            }
         });
 
         // ✅ Nếu popup đang mở, cập nhật LED bên trong popup
