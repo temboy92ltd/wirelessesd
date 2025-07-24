@@ -869,7 +869,7 @@
 
 <script>
 let currentPopupDeviceId = null; // Thiết bị đang mở popup
-
+let lastDataMap = {};  // Lưu trạng thái cũ của mỗi thiết bị
 async function fetchData() {
     try {
         const res = await fetch('/api/devices');  // ✅ Đúng: gọi GET lấy trạng thái LED
@@ -887,16 +887,25 @@ async function fetchData() {
             box.style.animation = 'none'; 
             void box.offsetWidth;
             const hasRed = data.includes(0);
-            if (hasRed) {
-                box.style.background = 'linear-gradient(to bottom, #ff4d4d, #e60000)';
-            } else {
-                box.style.background = 'linear-gradient(to bottom, #8fd349, #7ac83c)';
+            const prevData = lastDataMap[id]?.join(',') || '';
+            const newData = data.join(',');
+            // Nếu data mới khác với data cũ → xử lý animation
+            if (prevData !== newData) {
+                lastDataMap[id] = data;  // Cập nhật lại
+                
+                if (hasRed) {
+                    box.style.background = 'linear-gradient(to bottom, #ff4d4d, #e60000)';
+                } else {
+                    box.style.background = 'linear-gradient(to bottom, #8fd349, #7ac83c)';
+                }
+                // ✅ Reset animation trước khi gán lại
+                box.style.animation = 'none';
+                void box.offsetWidth;  // Bắt buộc: trigger reflow
+                box.style.animation = 'glow-yellow 1.5s ease-out';
+                setTimeout(() => {
+                    box.style.animation = 'none';
+                }, 1500);  // đúng thời gian bạn khai báo trong CSS
             }
-            // ✅ Reset animation trước khi gán lại
-            box.style.animation = 'none';
-            void box.offsetWidth;  // Bắt buộc: trigger reflow
-            box.style.animation = 'glow-yellow 1.5s ease-out';
-            box.style.animation = 'none';
         });
 
         // ✅ Nếu popup đang mở, cập nhật LED bên trong popup
