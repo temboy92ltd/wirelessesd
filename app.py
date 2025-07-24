@@ -13,6 +13,13 @@ devices = {addr: [] for addr in addresses}
 @app.route("/")
 def index():
     return render_template("Buiding.html",devices=devices.items())
+ 
+@app.route("/api/devices", methods=["GET"])
+def get_devices():
+    return jsonify([
+        {"address": addr, "data": data}
+        for addr, data in devices.items()
+    ])
 
 @app.route("/api/data", methods=['POST'])
 def receive_data():
