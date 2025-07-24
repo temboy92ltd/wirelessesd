@@ -869,7 +869,6 @@
 
 <script>
 let currentPopupDeviceId = null; // Thiết bị đang mở popup
-let lastDataMap = {};  // Lưu trạng thái cũ của mỗi thiết bị
 async function fetchData() {
     try {
         const res = await fetch('/api/devices');  // ✅ Đúng: gọi GET lấy trạng thái LED
@@ -887,9 +886,6 @@ async function fetchData() {
             box.style.animation = 'none'; 
             void box.offsetWidth;
             const hasRed = data.includes(0);
-            const prevData = lastDataMap[id]?.join(',') || '';
-            const newData = data.join(',');
-            // Nếu data mới khác với data cũ → xử lý animation
             if (prevData !== newData) {
                 lastDataMap[id] = data;  // Cập nhật lại
                 
