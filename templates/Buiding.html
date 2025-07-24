@@ -825,7 +825,7 @@ let currentPopupDeviceId = null; // Thiết bị đang mở popup
 
 async function fetchData() {
     try {
-        const res = await fetch('/api/data');
+        const res = await fetch('/api/devices');  // ✅ Đúng: gọi GET lấy trạng thái LED
         const jsonData = await res.json();
 
         jsonData.forEach(device => {
