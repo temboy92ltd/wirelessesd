@@ -889,15 +889,15 @@ async function fetchData() {
             if (prevData !== newData) {
                 lastDataMap[id] = data;  // Cập nhật lại
                 
-                if (hasRed) {
-                    box.style.background = 'linear-gradient(to bottom, #ff4d4d, #e60000)';
-                } else {
-                    box.style.background = 'linear-gradient(to bottom, #8fd349, #7ac83c)';
-                }
-                // ✅ Reset animation trước khi gán lại
-                box.style.animation = 'none';
-                void box.offsetWidth;  // Bắt buộc: trigger reflow
-                box.style.animation = 'glow-yellow 1.5s ease-out';
+            if (hasRed) {
+                box.style.background = 'linear-gradient(to bottom, #ff4d4d, #e60000)';
+            } else {
+                box.style.background = 'linear-gradient(to bottom, #8fd349, #7ac83c)';
+            }
+            // ✅ Reset animation trước khi gán lại
+            box.style.animation = 'none';
+            void box.offsetWidth;  // Bắt buộc: trigger reflow
+            box.style.animation = 'glow-yellow 1.5s ease-out';
             }
         });
 
