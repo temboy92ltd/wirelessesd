@@ -869,7 +869,7 @@
 
 <script>
 let currentPopupDeviceId = null; // Thiết bị đang mở popup
-const lastUpdate = {};  // khai báo ngoài fetchData (global biến)
+const lastDataMap = {}; // Lưu lại dữ liệu lần trước để so sánh
 
 async function fetchData() {
     try {
@@ -884,6 +884,7 @@ async function fetchData() {
             
             const box = document.getElementById(id);
             if (!box) return;
+            
             const hasRed = data.includes(0);
             if (prevData !== newData) {
                 lastDataMap[id] = data;  // Cập nhật lại
@@ -897,6 +898,7 @@ async function fetchData() {
                 box.style.animation = 'none';
                 void box.offsetWidth;  // Bắt buộc: trigger reflow
                 box.style.animation = 'glow-yellow 1.5s ease-out';
+            }
         });
 
         // ✅ Nếu popup đang mở, cập nhật LED bên trong popup
