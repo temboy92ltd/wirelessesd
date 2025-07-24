@@ -896,6 +896,7 @@ async function fetchData() {
             box.style.animation = 'none';
             void box.offsetWidth;  // Bắt buộc: trigger reflow
             box.style.animation = 'glow-yellow 1.5s ease-out';
+            box.style.animation = 'none';
         });
 
         // ✅ Nếu popup đang mở, cập nhật LED bên trong popup
