@@ -883,6 +883,8 @@ async function fetchData() {
             if (!box) return;
 
             // ✅ Chỉ đổi màu nền box nếu có LED đỏ
+            box.style.animation = 'none'; 
+            void box.offsetWidth;
             const hasRed = data.includes(0);
             if (hasRed) {
                 box.style.background = 'linear-gradient(to bottom, #ff4d4d, #e60000)';
