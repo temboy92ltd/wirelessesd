@@ -877,9 +877,9 @@ async function fetchData() {
         jsonData.forEach(device => {
             const id = device.address;
             const data = device.data;
-
             if (!Array.isArray(data) || data.length === 0) return;
             const box = document.getElementById(id);
+
             if (!box) return;
 
             // ✅ Chỉ đổi màu nền box nếu có LED đỏ
@@ -898,9 +898,6 @@ async function fetchData() {
                 box.style.animation = 'none';
                 void box.offsetWidth;  // Bắt buộc: trigger reflow
                 box.style.animation = 'glow-yellow 1.5s ease-out';
-                setTimeout(() => {
-                    box.style.animation = 'none';
-                }, 1500);  // đúng thời gian bạn khai báo trong CSS
             }
         });
 
