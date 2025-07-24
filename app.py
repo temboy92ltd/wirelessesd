@@ -14,7 +14,7 @@ devices = {addr: [] for addr in addresses}
 def index():
     return render_template("Buiding.html",devices=devices.items())
 
-@app.route("/api/data")
+@app.route("/api/data", methods=['POST'])
 def receive_data():
     data = []
     try:
