@@ -333,9 +333,6 @@
             inset 0 -2px 4px rgba(255, 255, 255, 0.15);
 
         transition: transform 0.2s ease, box-shadow 0.2s ease;
-
-        animation: glow-yellow 1.5s infinite ease-in-out;
-        transition: all 0.3s ease;
         }
     .box_restroom {
         background: linear-gradient(to bottom right, #000000, #1a1a1a);
@@ -889,8 +886,10 @@ async function fetchData() {
             const hasRed = data.includes(0);
             if (hasRed) {
                 box.style.background = 'linear-gradient(to bottom, #ff4d4d, #e60000)';
+                box.style.animation = 'glow-yellow 0.8s ease-out';
             } else {
                 box.style.background = 'linear-gradient(to bottom, #8fd349, #7ac83c)';
+                box.style.animation = 'glow-yellow 0.8s ease-out';
             }
         });
 
