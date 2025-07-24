@@ -7,7 +7,7 @@ app = Flask(__name__)
  #devices = ["C2-131", "C2-132", "C2-133", "C2-134","C2-135","C2-136","C2-137","C2-138","C2-139","C2-140","C2-141","C2-142"]
 
 # Danh sách thiết bị: C2-083 → C2-150
-addresses = [f'C2-{i:03}' for i in range(81, 151)]
+addresses = [f'C2-{i:03}' for i in range(81, 152)]
 devices = {addr: [] for addr in addresses}
 
 @app.route("/")
