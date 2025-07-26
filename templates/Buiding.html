@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>EEC - Wireless ESD Mornitoring system</title>
+  </head>
+
+  <body>
+    <div class="header">
+      <h1>EEC - Wireless ESD Mornitoring System</h1>
+    </div>
+
+    <div class="navigation">
+      <a href="#">🏠HOME</a>
+      <a href="#">⚡ESD Monitoring</a>
+      <a href="index.html">📊SPC</a>
+    </div>
+
+    <div class="content">
+      <div class="content-header">
+        <h2>ESD Controlled Area</h2>
+          <div class="layout" style="font-size: 20px;">
+              <!-- Row 1 -->
+              <div class="label black" style="grid-column-start: 1;">L1</div>
+              <div class="label black" style="grid-template-columns: 2;">K1</div>
+              <div class="label black" style="grid-template-columns: 3;">J1</div>
+              <!-- Hàng 1 -->
+              <div class="box_40v_laser" id="C2-131" style="grid-column-start: 1 ; grid-column: 1 / 3;" onclick="openPopup('C2-131')">C2-131<img src="/static/pic/80RYOBI.png" alt="logo" class="box-icon"><div class="led-container"></div> <!-- Nơi hiển thị LED --></div>
+              <div class="box_kitting_laser" style="grid-column-start: 3;">Kitting Area</div>
+              <!-- Hàng 2 -->
+              <div class="box_40v" id="C2-132" style="grid-column-start: 1 ; grid-column: 1 / 3;" onclick="openPopup('C2-132')">C2-132<img src="/static/pic/80RYOBI.png" alt="logo" class="box-icon"><div class="led-container"></div> <!-- Nơi hiển thị LED --></div>
+              <div class="box_kitting" style="grid-column-start: 3;">Kitting Area</div>
+              <!-- Row 2 -->
+              <div class="label black" style="grid-column-start: 1;">L2</div>
+              <div class="label black" style="grid-template-columns: 2;">K2</div>
+              <div class="label black" style="grid-template-columns: 3;">J2</div>   
+              <!-- Hàng 1 -->
+              <div class="box_40v" id="C2-133" style="grid-column-start: 1 ; grid-column: 1 / 3;" onclick="openPopup('C2-133')">C2-133<img src="/static/pic/40RYOBI.jpg.png" alt="logo" class="box-icon"><div class="led-container"></div> <!-- Nơi hiển thị LED --></div>
+              <div class="box_kitting" style="grid-column-start: 3;">Kitting Area</div>
+              <div class="box_40v" id="C2-134" style="grid-column-start: 1 ; grid-column: 1 / 3;" onclick="openPopup('C2-134')">C2-134<img src="/static/pic/40RYOBI.jpg.png" alt="logo" class="box-icon"><div class="led-container"></div> <!-- Nơi hiển thị LED --></div>
+              <div class="box_kitting" style="grid-column-start: 3;">Kitting Area</div>
+              <div class="box_40v" id="C2-135" style="grid-column-start: 1 ; grid-column: 1 / 3;" onclick="openPopup('C2-135')">C2-135<img src="/static/pic/40RYOBI.jpg.png" alt="logo" class="box-icon"><div class="led-container"></div> <!-- Nơi hiển thị LED --></div>
+              <div class="box_kitting" style="grid-column-start: 3;">Kitting Area</div>
+              <!-- Row 3 -->
+              <div class="label black" style="grid-column-start: 1;">L3</div>
+              <div class="label black" style="grid-template-columns: 2;">K3</div>
+              <div class="label black" style="grid-template-columns: 3;">J3</div>
+
+              <div class="box_40v" id="C2-136" style="grid-column-start: 1 ; grid-column: 1 / 3;" onclick="openPopup('C2-136')">C2-136<img src="/static/pic/40RYOBI.jpg.png" alt="logo" class="box-icon"><div class="led-container"></div> <!-- Nơi hiển thị LED --></div>
+              <div class="box_kitting" style="grid-column-start: 3;">Kitting Area</div>
+              <div class="box_40v" id="C2-137" style="grid-column-start: 1 ; grid-column: 1 / 3;" onclick="openPopup('C2-137')">C2-137<img src="/static/pic/40RYOBI.jpg.png" alt="logo" class="box-icon"><div class="led-container"></div> <!-- Nơi hiển thị LED --></div>
+              <div class="box_kitting" style="grid-column-start: 3;">Kitting Area</div>
+              <div class="box_40v" id="C2-138" style="grid-column-start: 1 ; grid-column: 1 / 3;" onclick="openPopup('C2-138')">C2-138<img src="/static/pic/40RYOBI.jpg.png" alt="logo" class="box-icon"><div class="led-container"></div> <!-- Nơi hiển thị LED --></div>
+              <div class="box_kitting" style="grid-column-start: 3;">Kitting Area</div>
+              <!-- Row 4 -->
+              <div class="label black" style="grid-column-start: 1;">L4</div>
+              <div class="label black" style="grid-template-columns: 2;">K4</div>
+              <div class="label black" style="grid-template-columns: 3;">J4</div>
+
+              <div class="box_40v" id="C2-139" style="grid-column-start: 1 ; grid-column: 1 / 3;" onclick="openPopup('C2-139')">C2-139<img src="/static/pic/40RYOBI.jpg.png" alt="logo" class="box-icon"><div class="led-container"></div> <!-- Nơi hiển thị LED --></div>
+              <div class="box_kitting" style="grid-column-start: 3;">Kitting Area</div>
+              <div class="box_40v" id="C2-140" style="grid-column-start: 1 ; grid-column: 1 / 3;" onclick="openPopup('C2-140')">C2-140<img src="/static/pic/40RYOBI.jpg.png" alt="logo" class="box-icon"><div class="led-container"></div> <!-- Nơi hiển thị LED --></div>
+              <div class="box_kitting" style="grid-column-start: 3;">Kitting Area</div>
+              <div class="box_40v" id="C2-141" style="grid-column-start: 1 ; grid-column: 1 / 3;" onclick="openPopup('C2-141')">C2-141<img src="/static/pic/40RYOBI.jpg.png" alt="logo" class="box-icon"><div class="led-container"></div> <!-- Nơi hiển thị LED --></div>
+              <div class="box_kitting" style="grid-column-start: 3;">Kitting Area</div>
+              <!-- Row 5 -->
+              <div class="label black" style="grid-column-start: 1;">L5</div>
+              <div class="label black" style="grid-template-columns: 2;">K5</div>
+              <div class="label black" style="grid-template-columns: 3;">J5</div>
+
+              <div class="box_hoover" id="C2-142" style="grid-column-start: 1 ;" onclick="openPopup('C2-142')">C2-142<img src="/static/pic/hoover.png" alt="logo" class="box-icon"><div class="led-container"></div> <!-- Nơi hiển thị LED --></div>
+              <div class="box_kitting" style="grid-column-start: 2">Kitting/FG</div>
+              <div class="box_18v" id="C2-OPLS" style="grid-column-start: 3" onclick="openPopup('OP-Laser Print')">OP-Laser Print <img src="/static/pic/pcba.png" alt="logo" class="box-icon"></div>
+
+              <div class="box_18v_2" id="C2-096" style="grid-column-start: 1;" onclick="openPopup('C2-096')">C2-096<img src="/static/pic/4RYOBI.png" alt="logo" class="box-icon"></div>
+              <div class="box_kitting " style="grid-column-start: 2">Kitting/FG</div>
+              <div class="box_ridgid" id="C2-093" style="grid-column-start: 3;" onclick="openPopup('C2-093')">C2-093 <img src="/static/pic/ridgid.png" alt="logo" class="box-icon"></div>
+              <!-- Row 6 -->
+              <div class="label black" style="grid-column-start: 1;">L6</div>
+              <div class="label black" style="grid-template-columns: 2;">K6</div>
+              <div class="label black" style="grid-template-columns: 3;">J6</div>
+
+              <div class="box_18v" id="C2-097" style="grid-column-start: 1;" onclick="openPopup('C2-097')">C2-097 <img src="/static/pic/cell.png" alt="logo" class="box-icon"></div>
+              <div class="box_kitting " style="grid-column-start: 2">Kitting/FG</div>
+              <div class="box_ridgid" id="C2-094" style="grid-column-start: 3;" onclick="openPopup('C2-094')">C2-094 <img src="/static/pic/ridgid.png" alt="logo" class="box-icon"></div>
+              <div class="box_18v" id="C2-091" style="grid-column-start: 1;" onclick="openPopup('C2-091')">C2-091 <img src="/static/pic/18RYOBI.png" alt="logo" class="box-icon"></div>
+              <div class="box_kitting " style="grid-column-start: 2">Kitting/FG</div>
+              <div class="box_ridgid" id="C2-095" style="grid-column-start: 3;" onclick="openPopup('C2-095')">C2-095 <img src="/static/pic/ridgid.png" alt="logo" class="box-icon"></div>
+              <div class="box_18v" id="C2-092" style="grid-column-start: 1;" onclick="openPopup('C2-092')">C2-092 <img src="/static/pic/18RYOBI.png" alt="logo" class="box-icon"></div>
+              <div class="box_kitting" style="grid-column-start: 2">Kitting/FG</div>
+              <div class="box_ridgid" id="C2-098" style="grid-column-start: 3;" onclick="openPopup('C2-098')">C2-098 <img src="/static/pic/ridgid.png" alt="logo" class="box-icon"></div>
+
+              <!-- Row 7 -->
+              <div class="label black" style="grid-column-start: 1;">L7</div>
+              <div class="label black" style="grid-template-columns: 2;">K7</div>
+              <div class="label black" style="grid-template-columns: 3;">J7</div>
+
+              <div class="box_restroom " style="grid-column-start: 1">Rest Room</div>
+              <div class="box_kitting " style="grid-column-start: 2">Kitting/FG</div>
+              <div class="box_18v" id="C2-CPTLS" style="grid-column-start: 3;" onclick="openPopup('CPT Laser Print')">CPT Laser Print <img src="/static/pic/pcba.png" alt="logo" class="box-icon"></div>
+              <div class="box_kitting " style="grid-column-start: 2">Kitting/FG</div>
+              <div class="box_hart" id="C2-100" style="grid-column-start: 3;" onclick="openPopup('C2-100')">C2-100 <img src="/static/pic/hart.png" alt="logo" class="box-icon"></div>
+              <div class="box_kitting " style="grid-column-start: 2">Kitting/FG</div>
+              <div class="box_hart" id="C2-113" style="grid-column-start: 3;" onclick="openPopup('C2-113')">C2-113 <img src="/static/pic/hart.png" alt="logo" class="box-icon"></div>
+
+
+              <!-- Row 8 -->
+              <div class="label black" style="grid-template-columns: 2;">K8</div>
+              <div class="label black" style="grid-template-columns: 3;">J8</div>
+
+              <div class="box_kitting" style="grid-column-start: 2">Kitting/FG</div>
+              <div class="box_18v" id="C2-114" style="grid-column-start: 3;" onclick="openPopup('C2-114')">C2-114 <img src="/static/pic/ryobi12ah.png" alt="logo" class="box-icon"></div>
+              <div class="box_kitting " style="grid-column-start: 2">Kitting/FG</div>
+              <div class="box_18v" id="C2-099" style="grid-column-start: 3;" onclick="openPopup('C2-099')">C2-099 <img src="/static/pic/18RYOBI.png" alt="logo" class="box-icon"></div>
+              <div class="box_kitting " style="grid-column-start: 2">Kitting/FG</div>
+              <div class="box_18v" id="C2-101" style="grid-column-start: 3;" onclick="openPopup('C2-101')">C2-101 <img src="/static/pic/18RYOBI.png" alt="logo" class="box-icon"></div>
+
+              <!-- Row 9 -->
+              <div class="label black" style="grid-column-start: 1;">L9</div>
+              <div class="label black" style="grid-template-columns: 2;">K9</div>
+              <div class="label black" style="grid-template-columns: 3;">J9</div>
+
+              <div class="box_office" style="grid-column-start: 2">PROD Office Area</div>
+              <div class="box_office" style="grid-column-start: 3">PM Test Area</div>
+              <div class="box_skatcher" id="C2-143" style="grid-column-start: 1;" onclick="openPopup('C2-143')">C2-143 <img src="/static/pic/katcher.png" alt="logo" class="box-icon"></div>
+              <div class="box_kitting " style="grid-column-start: 2">Kitting/FG</div>
+              <div class="box_18v" id="C2-102" style="grid-column-start: 3;" onclick="openPopup('C2-102')">C2-102 <img src="/static/pic/18RYOBI.png" alt="logo" class="box-icon"></div>
+              <div class="box_skatcher" id="C2-144" style="grid-column-start: 1;" onclick="openPopup('C2-144')">C2-144 <img src="/static/pic/katcher.png" alt="logo" class="box-icon"></div>
+              <div class="box_kitting" style="grid-column-start: 2">Kitting/FG</div>
+              <div class="box_18v" id="C2-103" style="grid-column-start: 3;" onclick="openPopup('C2-103')">C2-103 <img src="/static/pic/18RYOBI.png" alt="logo" class="box-icon"></div>
+
+              <!-- Row 10 -->
+              <div class="label black" style="grid-column-start: 1;">L10</div>
+              <div class="label black" style="grid-template-columns: 2;">K10</div>
+              <div class="label black" style="grid-template-columns: 3;">J10</div>
+
+              <div class="box_18v" id="C2-081" style="grid-column-start: 1;" onclick="openPopup('C2-081')">C2-081 <img src="/static/pic/18RYOBI.png" alt="logo" class="box-icon"></div>
+              <div class="box_kitting" style="grid-column-start: 2">Kitting/FG</div>
+              <div class="box_18v" id="C2-115" style="grid-column-start: 3;" onclick="openPopup('C2-115')">C2-115 <img src="/static/pic/18RYOBI.png" alt="logo" class="box-icon"></div>
+              <div class="box_18v" id="C2-082" style="grid-column-start: 1;" onclick="openPopup('C2-082')">C2-082 <img src="/static/pic/18RYOBI.png" alt="logo" class="box-icon"></div>
+              <div class="box_kitting " style="grid-column-start: 2">Kitting/FG</div>
+              <div class="box_18v" id="C2-116" style="grid-column-start: 3;" onclick="openPopup('C2-116')">C2-116 <img src="/static/pic/18RYOBI.png" alt="logo" class="box-icon"></div>
+              <div class="box_18v" id="C2-083" style="grid-column-start: 1;" onclick="openPopup('C2-083')">C2-083 <img src="/static/pic/18RYOBI.png" alt="logo" class="box-icon"></div>
+              <div class="box_kitting " style="grid-column-start: 2">Kitting/FG</div>
+              <div class="box_18v" id="C2-117" style="grid-column-start: 3;" onclick="openPopup('C2-117')">C2-117 <img src="/static/pic/18RYOBI.png" alt="logo" class="box-icon"></div>
+
+              <!-- Row 11 -->
+              <div class="label black" style="grid-column-start: 1;">L11</div>
+              <div class="label black" style="grid-template-columns: 2;">K11</div>
+              <div class="label black" style="grid-template-columns: 3;">J11</div>
+
+              <div class="box_18v" id="C2-084" style="grid-column-start: 1;" onclick="openPopup('C2-084')">C2-084 <img src="/static/pic/18RYOBI.png" alt="logo" class="box-icon"></div>
+              <div class="box_kitting " style="grid-column-start: 2">Kitting/FG</div>
+              <div class="box_18v" id="C2-118" style="grid-column-start: 3;" onclick="openPopup('C2-118')">C2-118 <img src="/static/pic/18RYOBI.png" alt="logo" class="box-icon"></div>
+              <div class="box_18v" id="C2-085" style="grid-column-start: 1;" onclick="openPopup('C2-085')">C2-085 <img src="/static/pic/18RYOBI.png" alt="logo" class="box-icon"></div>
+              <div class="box_kitting " style="grid-column-start: 2">Kitting/FG</div>
+              <div class="box_18v" id="C2-119" style="grid-column-start: 3;" onclick="openPopup('C2-119')">C2-119 <img src="/static/pic/18RYOBI.png" alt="logo" class="box-icon"></div>
+              <div class="box_18v" id="C2-086" style="grid-column-start: 1;" onclick="openPopup('C2-086')">C2-086 <img src="/static/pic/18RYOBI.png" alt="logo" class="box-icon"></div>
+              <div class="box_kitting " style="grid-column-start: 2">Kitting/FG</div>
+              <div class="box_18v" id="C2-120" style="grid-column-start: 3;" onclick="openPopup('C2-120')">C2-120 <img src="/static/pic/18RYOBI.png" alt="logo" class="box-icon"></div>
+
+              <!-- Row 12 -->
+              <div class="label black" style="grid-column-start: 1;">L12</div>
+              <div class="label black" style="grid-template-columns: 2;">K12</div>
+              <div class="label black" style="grid-template-columns: 3;">J12</div>
+
+              <div class="box_18v" id="C2-087" style="grid-column-start: 1;" onclick="openPopup('C2-087')">C2-087 <img src="/static/pic/18RYOBI.png" alt="logo" class="box-icon"></div>
+              <div class="box_kitting" style="grid-column-start: 2">Kitting/FG</div>
+              <div class="box_18v" id="C2-104" style="grid-column-start: 3;" onclick="openPopup('C2-104')">C2-104 <img src="/static/pic/18RYOBI.png" alt="logo" class="box-icon"></div>
+              <div class="box_18v" id="C2-088" style="grid-column-start: 1;" onclick="openPopup('C2-088')">C2-088 <img src="/static/pic/18RYOBI.png" alt="logo" class="box-icon"></div>
+              <div class="box_kitting " style="grid-column-start: 2">Kitting/FG</div>
+              <div class="box_18v" id="C2-121" style="grid-column-start: 3;" onclick="openPopup('C2-121')">C2-121 <img src="/static/pic/18RYOBI.png" alt="logo" class="box-icon"></div>
+              <div class="box_18v" id="C2-089" style="grid-column-start: 1;" onclick="openPopup('C2-089')">C2-089 <img src="/static/pic/18RYOBI.png" alt="logo" class="box-icon"></div>
+              <div class="box_kitting " style="grid-column-start: 2">Kitting/FG</div>
+              <div class="box_18v" id="C2-122" style="grid-column-start: 3;" onclick="openPopup('C2-122')">C2-122 <img src="/static/pic/18RYOBI.png" alt="logo" class="box-icon"></div>
+
+              <!-- Row 13 -->
+              <div class="label black" style="grid-column-start: 1;">L12</div>
+              <div class="label black" style="grid-template-columns: 2;">K12</div>
+              <div class="label black" style="grid-template-columns: 3;">J12</div>
+
+              <div class="box_18v" id="C2-090" style="grid-column-start: 1;" onclick="openPopup('C2-090')">C2-090 <img src="/static/pic/18RYOBI.png" alt="logo" class="box-icon"></div>
+              <div class="box_kitting" style="grid-column-start: 2">Kitting/FG</div>
+              <div class="box_18v" id="C2-123" style="grid-column-start: 3;" onclick="openPopup('C2-123')">C2-123 <img src="/static/pic/18RYOBI.png" alt="logo" class="box-icon"></div>
+              <div class="box_inveter" id="C2-149" style="grid-column-start: 1; grid-row-end: span 2;"onclick="openPopup('C2-149')">C2-149 <img src="/static/pic/inverter.png" alt="logo" class="box-icon"></div>
+              <div class="box_18v" id="C2-124" style="grid-column-start: 3;" onclick="openPopup('C2-124')">C2-124 <img src="/static/pic/18RYOBI.png" alt="logo" class="box-icon"></div>
+              <div class="box_18v" id="C2-147" style="grid-column-start: 3;;" onclick="openPopup('C2-147')">C2-147 <img src="/static/pic/18RYOBI.png" alt="logo" class="box-icon"></div>
+
+              <!-- Row 14 -->
+              <div class="label black" style="grid-column-start: 1;">L14</div>
+              <div class="label black" style="grid-template-columns: 2;">K14</div>
+              <div class="label black" style="grid-template-columns: 3;">J14</div>
+
+              <div class="box_inveter" id="C2-150" style="grid-column-start: 1; grid-row-end: span 2;" onclick="openPopup('C2-150')">C2-150 <img src="/static/pic/inverter.png" alt="logo" class="box-icon"></div>
+              <div class="box_kitting_laser" style="grid-column-start: 3;">Kitting/FG</div>
+              <div class="box_powerbox" id="C2-151" style="grid-column-start: 1; grid-row-end: span 2;" onclick="openPopup('C2-151')">C2-151 <img src="/static/pic/inveter.png" alt="logo" class="box-icon"></div>
+              <div class="box_kitting" style="grid-column-start: 3;">Kitting/FG</div>
+          </div>
+
+      </div>
+      <div class="sidebar">
+        <h2>Trạng Thái Hiển Thị</h2>
+            <!-- Trạng thái OK -->
+          <div class="status-note"></div>
+          <div class="status-circle ok"></div>
+          <span class="status-label">Trạng thái OK</span>
+          <!-- Trạng thái NG với note -->
+          <div class="status-note"></div>
+          <div class="status-circle ng"></div>
+          <span class="status-label">Trạng thái NG</span>
+          <div class="status-note"></div>
+          <span class="status-label">--------------------------</span>
+          <div class="status-note"></div>
+          <span class="status-label">Nhấn vào thẻ xem chi tiết trạng thái của line</span>
+
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>Green Plannet Distribution Centre © 2025</p>
+    </div>
+
+    <script>
+      let currentPopupDeviceId = null; // Thiết bị đang mở popup
+      const lastUpdate = {};  // khai báo ngoài fetchData (global biến)
+      async function fetchData() {
+          try {
+              const res = await fetch('/api/devices');  // ✅ Đúng: gọi GET lấy trạng thái LED
+              const jsonData = await res.json();
+
+              jsonData.forEach(device => {
+                  const id = device.address;
+                  const data = device.data;
+                  // Nếu không có data hoặc data rỗng thì bỏ qua (→ không animation)
+                  if (!Array.isArray(data) || data.length === 0) return;
+                  
+                  const box = document.getElementById(id);
+                  if (!box) return;
+                  
+                  const hasRed = data.includes(0);
+                  if (hasRed) {
+                      box.style.background = 'linear-gradient(to bottom, #ff4d4d, #e60000)';
+                  } else {
+                      box.style.background = 'linear-gradient(to bottom, #8fd349, #7ac83c)';
+                  }
+                  // ✅ Reset animation trước khi gán lại
+                  box.style.animation = 'none';
+                  void box.offsetWidth;  // Bắt buộc: trigger reflow
+                  box.style.animation = 'glow-yellow 1.5s ease-out';
+              });
+
+              // ✅ Nếu popup đang mở, cập nhật LED bên trong popup
+              if (currentPopupDeviceId) {
+                  const device = jsonData.find(d => d.address === currentPopupDeviceId);
+                  if (device) {
+                      const container = document.getElementById('popup-leds');
+                      if (container) {
+                          container.innerHTML = '';
+                          device.data.forEach(val => {
+                              const led = document.createElement('div');
+                              led.className = 'led ' + (val === 1 ? 'green' : 'red');
+                              container.appendChild(led);
+                          });
+                      }
+                  }
+              }
+
+          } catch (err) {
+              console.error("Lỗi khi fetch dữ liệu:", err);
+          }
+      }
+      fetchData();
+      setInterval(fetchData, 1000);
+    </script>
+
+    <div id="popup" class="popup" onclick="closePopup()">
+      <div class="popup-content" onclick="event.stopPropagation()">
+        <h3 id="popup-title">Thiết bị</h3>
+        <div id="popup-leds" class="led-container"></div>
+        <button onclick="closePopup()">Đóng</button>
+      </div>
+    </div>
+
+    <script>
+      function showPopup(name, data) {
+        currentPopupDeviceId = name; // Lưu địa chỉ đang mở
+
+        document.getElementById('popup-title').textContent = name;
+        const container = document.getElementById('popup-leds');
+        container.innerHTML = '';
+
+        data.forEach(val => {
+          const led = document.createElement('div');
+          led.className = 'led ' + (val === 1 ? 'green' : 'red');
+          container.appendChild(led);
+        });
+
+        popup.classList.remove('hidden');
+      }
+      // Đóng popup
+      document.getElementById('close-btn').onclick = () => {
+        document.getElementById('popup').classList.add('hidden');
+      };
+    </script>
+
+    <script>
+      // Đóng popup khi nhấn nút đóng
+      document.getElementById('close-btn').onclick = function () {
+        document.getElementById('popup').classList.add('hidden');
+      };
+    </script>
+    <script>
+      const popup = document.getElementById('popup');
+      const popupContent = document.querySelector('.popup-content');
+      const closeBtn = document.getElementById('close-btn');
+
+      // Nhấn nút × để đóng
+      closeBtn.onclick = () => {
+      popup.classList.add('hidden');
+      currentPopupDeviceId = null;
+    };
+
+      // Nhấn ngoài vùng popup-content để đóng
+    popup.addEventListener('click', function (event) {
+      if (!popupContent.contains(event.target)) {
+        popup.classList.add('hidden');
+        currentPopupDeviceId = null;
+      }
+    });
+    </script>
+    <script>
+    function openPopup(id) {
+        currentPopupDeviceId = id;
+
+        // Hiển thị popup
+        document.getElementById("popup").style.display = "block";
+
+        // Đặt tiêu đề hoặc ID thiết bị nếu muốn
+        document.getElementById("popup-title").innerText = "Line: " + id;
+    }
+    function closePopup() {
+        currentPopupDeviceId = null;
+        document.getElementById("popup").style.display = "none";
+    }
+    </script>
+  </body>
+</html>
