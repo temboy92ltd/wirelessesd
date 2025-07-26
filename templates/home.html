@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
+<title>EEC - Wireless ESD Mornitoring system</title>
+<style>
+  /* CSS cho header */
+    .header {
+        padding: 20px;
+        text-align: center;
+        background-image: url("/static/pic/Fac.jpg"); /* Thay bằng đường dẫn ảnh thật */
+        background-size: cover;         /* Ảnh phủ kín layout */
+        background-position: center;    /* Căn giữa ảnh */
+        background-repeat: no-repeat;   /* Không lặp ảnh */
+    }
+
+  /* CSS cho navigation */
+    .navigation {
+        background: linear-gradient(to right, #3a7bd5, #00d2ff); /* Gradient xanh biển */
+        padding: 10px 20px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); /* Đổ bóng nhẹ */
+        border-radius: 8px;
+    }
+
+    .navigation a {
+        float: left;
+        color: white;
+        font-size: 20px;
+        font-weight: bold;
+        text-align: center;
+        padding: 12px 18px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background 0.3s ease, transform 0.2s ease;
+        border-radius: 6px;
+    }
+    </style>
+</head>
+    <body>
+      <div class="header">
+        <h1>EEC - Wireless ESD Mornitoring System</h1>
+        </div>
+
+    <div class="navigation">
+        <a href="{{ url_for('home') }}">🏠HOME</a>
+        <a href="{{ url_for('esd') }}">⚡ESD Monitoring</a>
+        <a href="{{ url_for('spc') }}">📊 SPC</a>
+    </div>
+  </body>
+  </html>
