@@ -9,10 +9,53 @@
     .header {
         padding: 20px;
         text-align: center;
+        color: green;
         background-image: url("/static/pic/Fac.jpg"); /* Thay bằng đường dẫn ảnh thật */
         background-size: cover;         /* Ảnh phủ kín layout */
         background-position: center;    /* Căn giữa ảnh */
         background-repeat: no-repeat;   /* Không lặp ảnh */
+    }
+ * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    /* Video background */
+    .video-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -2;
+    }
+
+    /* Overlay trắng mờ */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.5); /* Trắng mờ */
+      z-index: -1;
+    }
+
+    /* Nội dung chính */
+    .content {
+      position: relative;
+      z-index: 1;
+      color: #333;
+      text-align: center;
+      padding-top: 100px;
     }
 
   /* CSS cho navigation */
@@ -36,17 +79,26 @@
         transition: background 0.3s ease, transform 0.2s ease;
         border-radius: 6px;
     }
+        .navigation a:hover {
+      background: rgba(255, 255, 255, 0.9);
+    }
     </style>
 </head>
     <body>
       <div class="header">
-        <h1>EEC - Wireless ESD Mornitoring System</h1>
+        <h1>Green Planet Distribution Center</h1>
         </div>
-
-    <div class="navigation">
-        <a href="{{ url_for('home') }}">🏠HOME</a>
-        <a href="{{ url_for('esd') }}">⚡ESD Monitoring</a>
-        <a href="{{ url_for('spc') }}">📊 SPC</a>
-    </div>
+  <!-- Navigation -->
+        <div class="navigation">
+            <a href="{{ url_for('home') }}">🏠HOME</a>
+            <a href="{{ url_for('esd') }}">⚡ESD Monitoring</a>
+            <a href="{{ url_for('spc') }}">📊 SPC</a>
+        </div>
+        <!-- Video background -->
+        <video autoplay muted loop playsinline class="video-bg">
+            <source src="{{ url_for('static', filename='video/18vCPT.mp4') }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="overlay"></div>
   </body>
   </html>
