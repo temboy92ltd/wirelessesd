@@ -624,9 +624,9 @@
 .hidden {
   display: none;
 }
-  .border-yellow { border: 5px solid rgb(127, 255, 0) !important; }
-  .border-orange { border: 5px solid orange !important; }
-  .border-blue   { border: 5px solid deepskyblue !important; }
+.border-yellow { border: 5px solid rgb(127, 255, 0) !important; }
+.border-orange { border: 5px solid orange !important; }
+.border-blue   { border: 5px solid deepskyblue !important; }
 
   @keyframes glow-yellow {
     0%, 100% { box-shadow: 0 0 10px rgba(127, 255, 0, 0.5); }
@@ -643,6 +643,6 @@
     50%      { box-shadow: 0 0 20px rgba(0, 191, 255, 1); }
   }
 
-  .glow-yellow { animation: glow-yellow 1.5s infinite ease-in-out; }
-  .glow-orange { animation: glow-orange 1.5s infinite ease-in-out; }
-  .glow-blue   { animation: glow-blue 1.5s infinite ease-in-out; }
+.glow-yellow { animation: glow-yellow 1.5s infinite ease-in-out; }
+.glow-orange { animation: glow-orange 1.5s infinite ease-in-out; }
+.glow-blue   { animation: glow-blue 1.5s infinite ease-in-out; }
