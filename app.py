@@ -11,12 +11,16 @@ addresses = [f'C2-{i:03}' for i in range(81, 152)]
 devices = {addr: [] for addr in addresses}
 
 @app.route("/")
-def index():
-    return render_template("Buiding.html",devices=devices.items())
+def home():
+    return render_template("home.html")
+
+@app.route('/esd')
+def esd():
+    return render_template('ESD.html',devices=devices.items())
 
 @app.route('/spc')
 def spc():
-    return render_template('index.html')
+    return render_template('SPC.html')
  
 @app.route("/api/devices", methods=["GET"])
 def get_devices():
