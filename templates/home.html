@@ -58,18 +58,25 @@
 
   /* CSS cho navigation */
     .navigation {
-        background: rgba(128, 128, 128, 0.5); /* Màu xám trong suốt */
-        padding: 10px 20px;
-        overflow: hidden;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); /* Đổ bóng nhẹ */
-        backdrop-filter: blur(5px); /* Tùy chọn: tạo hiệu ứng mờ nền */
-/*         border-radius: 8px; */
+     display: flex;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.192); /* trắng mờ */
+    padding: 150px 200px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;  /* Căn trái-phải */
+    gap: 100px;
+    z-index: 2; /* Đảm bảo nổi trên video */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
 
     .navigation a {
         float: left;
-        color: white;
-        font-size: 20px;
+        color: rgb(85, 83, 83);
+        font-size: 30px;
         font-weight: bold;
         text-align: center;
         padding: 12px 18px;
@@ -98,8 +105,8 @@
         </div> -->
   <!-- Navigation -->
         <div class="navigation">
-            <a href="{{ url_for('esd') }}">⚡ESD Monitoring</a>
-            <a href="{{ url_for('spc') }}">📊 SPC</a>
+            <a href="{{ url_for('esd') }}" style="margin-left: 10px;">⚡ESD Monitoring</a>
+            <a href="{{ url_for('spc') }}" style="margin-right: auto;">📊 Statistical Process Control</a>
         </div>
         <!-- Video background -->
           <div class="content-container">
